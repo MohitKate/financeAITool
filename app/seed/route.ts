@@ -103,14 +103,26 @@ async function seedRevenue() {
 
 export async function GET() {
   try {
-    const result = await sql.begin((sql) => [
-      seedUsers(),
-      seedCustomers(),
-      seedInvoices(),
-      seedRevenue(),
-    ]);
-
-    return Response.json({ message: 'Database seeded successfully' });
+      // Only run in development
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      const result = await sql.begin((sql) => [
+        seedUsers(),
+        seedCustomers(),
+        seedInvoices(),
+        seedRevenue(),
+      ]);
+      
+      return Response.json({ message: 'Database seeded successfully' });
+    } catch (error) {
+      console.error('Seeding error:', error);
+      return Response.json({ error: 'Failed to seed database' }, { status: 500 });
+    }
+  }
+  
+  // Always return this in production
+  return Response.json({ message: 'Seeding not available in production' });
+   
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }
