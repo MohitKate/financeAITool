@@ -13,6 +13,8 @@
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
+    "lottie-react": "^2.4.1",
+    "mongodb": "^6.15.0",
     "mongoose": "^8.12.1",
     "next": "latest",
     "next-auth": "5.0.0-beta.25",
@@ -29,6 +31,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/node": "22.10.7",
     "@types/react": "19.0.7",
-    "@types/react-dom": "19.0.3"
+    "@types/react-dom": "19.0.3",
+    "@types/three": "^0.174.0"
   }
 }
