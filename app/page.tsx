@@ -1,10 +1,26 @@
+"use client";
+
 import AcmeLogo from "@/app/ui/acme-logo";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import styles from "@/app/ui/home.module.css";
 import { lusitana } from "@/app/ui/fonts";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+import  FinanceAnimation  from "@/app/ui/animation/financeanim";
 export default function Page() {
+
+  const fetchAllData = async () => {
+    const response = await fetch("/api/getCustomers");
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+    } else {
+        alert("Failed to fetch data!");
+    }
+};
   return (
     <main className="flex min-h-screen flex-col bg-gradient-to-b from-blue-100 to-white">
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
@@ -22,12 +38,14 @@ export default function Page() {
             href="/login"
             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
           >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            <span >Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
           </Link>
+
+          <button type="button" onClick={fetchAllData}>Click</button>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           {/* Add Hero Images Here */}
-          <Image
+          {/* <Image
             src="/hero-desktop.png"
             width={1000}
             height={760}
@@ -41,7 +59,10 @@ export default function Page() {
             height={620}
             className="block md:hidden"
             alt="Screenshots of the dashboard project showing desktop version"
-          />
+          /> */}
+          <FinanceAnimation/>
+
+          
         </div>
       </div>
     </main>
