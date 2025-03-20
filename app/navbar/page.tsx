@@ -1,8 +1,12 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
 import AcmeLogo from "../ui/acme-logo";
-
+import { usePathname } from 'next/navigation';
+import clsx from "clsx";
 export default function Navbar() {
+  const pathname=usePathname();
   return (
     <>
       <nav
@@ -38,28 +42,57 @@ export default function Navbar() {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <Link href="/dashboard" className="text-sm font-semibold text-white">
+          <Link href="/dashboard" className={clsx('text-sm font-semibold text-white',
+            {
+              'text-white opacity-75':pathname=='/dashboard'
+            }
+          )}>
           Dashboard
           </Link>
-          <Link href="#" className="text-sm font-semibold text-white">
+          <Link href="/dashboard/invoices" className={clsx('text-sm font-semibold text-white',
+            {
+              'text-white opacity-75':pathname=='/dashboard/invoices'
+            }
+          )}>
             Invoices
           </Link>
-          <Link href="#" className="text-sm font-semibold text-white">
+          <Link href='/dashboard/customers' className={clsx('text-sm font-semibold text-white',
+            {
+              'text-white opacity-75':pathname=='dashboard/customers'
+            }
+          )}>
             Customers
           </Link>
-          <Link href="#" className="text-sm font-semibold text-white">
+          <Link href="#" className={clsx('text-sm font-semibold text-white',
+            {
+              'text-white opacity-75':pathname=='dashboard/budgets'
+            }
+          )}>
           Budgets
-          </Link><Link href="#" className="text-sm font-semibold text-white">
+          </Link><Link href="#" className={clsx('text-sm font-semibold text-white',
+            {
+              'text-white opacity-75':pathname=='dashboard/trasactions'
+            }
+          )}>
             Transactions
           </Link>
-          <Link href="#" className="text-sm font-semibold text-white">
+          <Link href="#" className={clsx('text-sm font-semibold text-white',
+            {
+              'text-white opacity-75':pathname=='dashboard/profile'
+            }
+          )}>
           Profile/Settings
           </Link>
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link href="#" className="text-sm font-semibold text-white">
+       <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          {pathname === '/' ?<Link href="#" className="text-sm font-semibold text-white">
             Log in &rarr;
-          </Link>
+          </Link>:<Image
+            src="/profile.png"
+            width={32}
+            height={32}
+            className="rounded-full"
+            alt="Profile Picture"/>}
         </div>
       </nav>
     </>
