@@ -29,38 +29,37 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
-    // const data = await sql<LatestInvoiceRaw[]>`
-    //   SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-    //   FROM invoices
-    //   JOIN customers ON invoices.customer_id = customers.id
-    //   ORDER BY invoices.date DESC
-    //   LIMIT 5`;
-      await connectToDatabase();
-    // 1. Fetch the latest 5 invoices
+        
     const latestInvoices = await Invoices.find({})
-    .sort({ date: -1 }) // Sort by date descending
-    .limit(5)           // Limit to 5 invoices
-    .populate({         // Populate the customer details
-      path: 'customer_id',
-      model: Customers,  // The field in the Invoice model that references the Customer model
-      select: 'name image_url email' // Select the fields you want from the Customer model
-    })
-    .lean()            // Return plain JavaScript objects  // // 2. Transform the data to match the desired format
-  
+      .sort({ invoiceDate: -1 }) // Changed from date to invoiceDate to match your schema
+      .limit(5)
+      .populate({
+        path: 'customer_id',
+        model: 'Customers',  // Changed to string reference
+        select: 'name email image_url'
+      })
+      .lean();
 
+    if (!latestInvoices || latestInvoices.length === 0) {
+      return [];
+    }
 
-    // const formattedInvoices = latestInvoices.map((invoice) => ({
-    //   ...invoice,
-    //   amount: formatCurrency(invoice.amount),
-    // }));
-    return latestInvoices.map((invoice: any) => ({
-        id: invoice._id.toString(),   // Use _id for MongoDB's ID field
+    // Transform and validate the data
+    return latestInvoices.map((invoice: any) => {
+      if (!invoice.customer_id) {
+        console.error('Missing customer data for invoice:', invoice._id);
+        return null;
+      }
+
+      return {
+        id: invoice._id.toString(),
         amount: formatCurrency(invoice.amount),
-        name: invoice.customer_id.name,  // Access populated customer data
-        image_url: invoice.customer_id.image_url,
-        email: invoice.customer_id.email,
+        name: invoice.customer_id.name || 'Unknown',
+        image_url: invoice.customer_id.image_url || '',
+        email: invoice.customer_id.email || '',
+      };
+    }).filter(Boolean); // Remove any null entries
 
-      }));
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch the latest invoices.");
