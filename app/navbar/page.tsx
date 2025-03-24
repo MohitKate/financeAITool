@@ -56,12 +56,12 @@ export default function Navbar() {
           )}>
             Invoices
           </Link>
-          <Link href='/dashboard/customers' className={clsx('text-sm font-semibold text-white',
+          <Link href='/dashboard/clients' className={clsx('text-sm font-semibold text-white',
             {
-              'text-white opacity-75':pathname=='dashboard/customers'
+              'text-white opacity-75':pathname=='/dashboard/clients'
             }
           )}>
-            Customers
+            Clients
           </Link>
           <Link href="#" className={clsx('text-sm font-semibold text-white',
             {
