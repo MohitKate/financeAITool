@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const customerSchema=new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
     },
     email:{
         type:String,
@@ -13,7 +13,7 @@ const customerSchema=new mongoose.Schema({
         type:String,
         required:true
     }
-});
+},{timestamps:true});
 
 const Customers=mongoose.models.Customers || mongoose.model('Customers',customerSchema);
 
