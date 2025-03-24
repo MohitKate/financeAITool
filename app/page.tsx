@@ -12,7 +12,7 @@ import  FinanceAnimation  from "@/app/ui/animation/financeanim";
 export default function Page() {
 
   const fetchAllData = async () => {
-    const response = await fetch("/api/getCustomers");
+    const response = await fetch("/api/clients");
 
     if (response.ok) {
         const data = await response.json();
