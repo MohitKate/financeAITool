@@ -86,3 +86,17 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+
+export type Client={
+  customerId: string,
+      financialGoals: String,
+      interactionHistory: [
+        {
+          date: Date,
+          notes: String
+        }
+      ]
+  
+
+}
