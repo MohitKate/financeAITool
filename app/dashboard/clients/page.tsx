@@ -83,7 +83,7 @@ export default function ClientList() {
   };
 
   const viewClient = async (clientId: string) => {
-    router.push(`/dashboard/clients/edit/${clientId}`);
+    router.push(`/dashboard/clients/view/${clientId}`);
   };
 
   // Get status color based on client status
