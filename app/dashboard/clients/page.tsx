@@ -86,6 +86,11 @@ export default function ClientList() {
     router.push(`/dashboard/clients/view/${clientId}`);
   };
 
+  const editClient = async (clientId: string) => {
+    console.log(clientId);
+    router.push(`/dashboard/clients/edit/${clientId}`);
+  };
+
   // Get status color based on client status
   const getStatusColor = (status: any) => {
     switch (status) {
@@ -205,7 +210,8 @@ export default function ClientList() {
                       >
                         View
                       </button>
-                      <button className="bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-1 px-3 rounded text-xs mr-2">
+                      <button className="bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-1 px-3 rounded text-xs mr-2"
+                      onClick={() => editClient(client?._id)}>
                         Edit
                       </button>
                       <button

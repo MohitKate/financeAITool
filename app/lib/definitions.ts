@@ -100,3 +100,17 @@ export type Client={
   
 
 }
+
+export interface Interaction {
+  date: string;
+  notes: string;
+}
+
+// Interface for the entire client form data
+export interface ClientFormData {
+  name: string;
+  email: string;
+  image_url: string;
+  financialGoals: string;
+  interactionHistory: Interaction[];
+}
